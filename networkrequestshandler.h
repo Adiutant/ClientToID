@@ -1,18 +1,23 @@
-#ifndef DBHELPER_H
-#define DBHELPER_H
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSql>
+#ifndef NETWORKREQUESTSHANDLER_H
+#define NETWORKREQUESTSHANDLER_H
+#include <QSqlDatabase>
+#include <QtSql>
+#include "QMessageBox"
 #include <string>
+#include <QtWidgets>
 #include <iostream>
+using namespace std;
 
-class DbHelper
+
+
+class NetworkRequestsHandler
 {
 public:
-    DbHelper();
-    ~DbHelper();
+    NetworkRequestsHandler();
+    ~NetworkRequestsHandler();
     bool checkConnection();
-    bool writeNewUser(QString username, QString password );
-    bool checkAccess(QString username, QString password,QString lastname , QString otchestvo, QString name, QString nodegroup, QString roles, QString phonenumber, QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);
+    bool checkAccess(QString username, QString password );
+    bool writeNewUser(QString username, QString password,QString lastname , QString otchestvo, QString name, QString nodegroup, QString roles, QString phonenumber, QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);
 };
 
-#endif // DBHELPER_H
+#endif // NETWORKREQUESTSHANDLER_H

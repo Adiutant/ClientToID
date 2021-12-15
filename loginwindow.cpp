@@ -1,24 +1,24 @@
-#include "registrationwindow.h"
-#include "ui_registrationwindow.h"
+#include "loginwindow.h"
+#include "ui_loginwindow.h"
 
-RegistrationWindow::RegistrationWindow(QWidget *parent) :
+LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::RegistrationWindow)
+    ui(new Ui::LoginWindow)
 {
     ui->setupUi(this);
 }
 
-RegistrationWindow::~RegistrationWindow()
+LoginWindow::~LoginWindow()
 {
     delete ui;
 }
 
-void RegistrationWindow::on_loginButton_clicked()
+void LoginWindow::on_loginButton_clicked()
 {
 
 }
 
-void RegistrationWindow::on_pushButton_clicked()
+void LoginWindow::on_pushButton_clicked()
 {
 
 }

@@ -1,19 +1,19 @@
-#ifndef REGISTRATIONWINDOW_H
-#define REGISTRATIONWINDOW_H
+#ifndef LOGINWINDOW_H
+#define LOGINWINDOW_H
 
 #include <QMainWindow>
 
 namespace Ui {
-class RegistrationWindow;
+class LoginWindow;
 }
 
-class RegistrationWindow : public QMainWindow
+class LoginWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit RegistrationWindow(QWidget *parent = 0);
-    ~RegistrationWindow();
+    explicit LoginWindow(QWidget *parent = 0);
+    ~LoginWindow();
 
 private slots:
     void on_loginButton_clicked();
@@ -21,7 +21,7 @@ private slots:
     void on_pushButton_clicked();
 
 private:
-    Ui::RegistrationWindow *ui;
+    Ui::LoginWindow *ui;
 };
 
-#endif // REGISTRATIONWINDOW_H
+#endif // LOGINWINDOW_H
