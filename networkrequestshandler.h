@@ -5,16 +5,29 @@
 #include "QMessageBox"
 #include <string>
 #include <QtWidgets>
+#include <QObject>
 #include <iostream>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QUrl>
+#include <QSqlDatabase>
+#include <QSql>
+#include <QString>
+#include <QtNetwork/QNetworkReply>
 using namespace std;
 
 
 
-class NetworkRequestsHandler
-{
+class NetworkRequestsHandler :public QObject {
+
+private :
+    QNetworkAccessManager *netManager;
+    QNetworkRequest *request;
+    const QString HEALTHY_CODE = "HEALTHY_ACT";
+Q_OBJECT
 public:
-    NetworkRequestsHandler();
-    ~NetworkRequestsHandler();
+    explicit NetworkRequestsHandler(QObject *parent=0);
+     ~NetworkRequestsHandler();
     bool checkConnection();
     bool checkAccess(QString username, QString password );
     bool writeNewUser(QString username, QString password,QString lastname , QString otchestvo, QString name, QString nodegroup, QString roles, QString phonenumber, QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);

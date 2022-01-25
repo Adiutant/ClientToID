@@ -4,8 +4,8 @@
 #include <QMainWindow>
 
 namespace Ui {
-class LoginWindow;
-}
+  class LoginWindow;
+};
 
 class LoginWindow : public QMainWindow
 {

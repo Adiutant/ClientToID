@@ -1,27 +1,50 @@
 #include "networkrequestshandler.h"
-#include <QSqlDatabase>
-#include <QSql>
-NetworkRequestsHandler::NetworkRequestsHandler()
+
+
+NetworkRequestsHandler::NetworkRequestsHandler(QObject *parent)
 {
+    netManager = new QNetworkAccessManager(parent);
+
+    //manager->get(request);
+
 
 }
+NetworkRequestsHandler::~NetworkRequestsHandler()
+{
+    free(netManager);
+    free(request);
+}
 bool NetworkRequestsHandler::checkConnection(){
-    QSqlDatabase dbObj = QSqlDatabase::addDatabase("QPSQL");
-    dbObj.setDatabaseName("test_task_db");
-    dbObj.setUserName("postgres");
-   // dbObj.setPassword("123");
+    request->setUrl(QUrl("localhost:8080/check_conn"));
+    connect(netManager, &QNetworkAccessManager::finished,
+            this, [=](QNetworkReply *reply) {
+                if (reply->error()) {
+                    qDebug() << reply->errorString();
+                    return;
+                }
 
-    if (!dbObj.open()){
-        QMessageBox::warning(0,"Db Error",dbObj.lastError().text());
-        return false;
+                QString answer = reply->readAll();
+
+                qDebug() << answer;
+            }
+        );
+    netManager->get(*request);
+//    QSqlDatabase dbObj = QSqlDatabase::addDatabase("QPSQL");
+//    dbObj.setDatabaseName("test_task_db");
+//    dbObj.setUserName("postgres");
+//   // dbObj.setPassword("123");
+
+//    if (!dbObj.open()){
+//        QMessageBox::warning(0,"Db Error",dbObj.lastError().text());
+//        return false;
 
 
-    }
-    QSqlQuery query;
-    query.exec("CREATE TABLE users (username TEXT, password TEXT, code TEXT);");
+//    }
+//    QSqlQuery query;
+//    query.exec("CREATE TABLE users (username TEXT, password TEXT, code TEXT);");
 
 
-    return true;
+//    return true;
 }
 bool NetworkRequestsHandler::checkAccess(QString username, QString password ){
     QSqlQuery query;
