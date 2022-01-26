@@ -11,11 +11,12 @@ NetworkRequestsHandler::NetworkRequestsHandler(QObject *parent)
 }
 NetworkRequestsHandler::~NetworkRequestsHandler()
 {
-    free(netManager);
-    free(request);
+    //free(netManager);
+    //free(request);
 }
 bool NetworkRequestsHandler::checkConnection(){
-    request->setUrl(QUrl("localhost:8080/check_conn"));
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://localhost:80"));
     connect(netManager, &QNetworkAccessManager::finished,
             this, [=](QNetworkReply *reply) {
                 if (reply->error()) {
@@ -28,7 +29,7 @@ bool NetworkRequestsHandler::checkConnection(){
                 qDebug() << answer;
             }
         );
-    netManager->get(*request);
+    netManager->get(request);
 //    QSqlDatabase dbObj = QSqlDatabase::addDatabase("QPSQL");
 //    dbObj.setDatabaseName("test_task_db");
 //    dbObj.setUserName("postgres");
@@ -57,7 +58,10 @@ bool NetworkRequestsHandler::checkAccess(QString username, QString password ){
 
 return true;
 }
-bool NetworkRequestsHandler::writeNewUser(QString username, QString password,QString lastname , QString otchestvo, QString name, QString nodegroup, QString roles, QString phonenumber, QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable){
+bool NetworkRequestsHandler::writeNewUser(QString username, QString password, QString lastname,
+                                          QString patronymic, QString name, QString nodegroup,
+                                          QString roles, QString phonenumber, QString email,
+                                          QString userdescription, QString passwordexpiration, QString loginattemptsaviable){
     QSqlQuery query;
 
     query.prepare("SELECT * FROM users WHERE username=?;");

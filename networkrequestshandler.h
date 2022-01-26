@@ -22,16 +22,20 @@ class NetworkRequestsHandler :public QObject {
 
 private :
     QNetworkAccessManager *netManager;
-    QNetworkRequest *request;
+
     const QString HEALTHY_CODE = "HEALTHY_ACT";
     const QString NEW_CLIENT_SIGNATURE = "NEW_CLIENT_ATTACHED";
+
 Q_OBJECT
+
 public:
     explicit NetworkRequestsHandler(QObject *parent=0);
      ~NetworkRequestsHandler();
     bool checkConnection();
     bool checkAccess(QString username, QString password );
-    bool writeNewUser(QString username, QString password,QString lastname , QString otchestvo, QString name, QString nodegroup, QString roles, QString phonenumber, QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);
+    bool writeNewUser(QString username, QString password,QString lastname ,
+                      QString patronymic, QString name, QString nodegroup, QString roles, QString phonenumber,
+                      QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);
 };
 
 #endif // NETWORKREQUESTSHANDLER_H
