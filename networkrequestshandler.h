@@ -24,6 +24,7 @@ private :
     QNetworkAccessManager *netManager;
     QNetworkRequest *request;
     const QString HEALTHY_CODE = "HEALTHY_ACT";
+    const QString NEW_CLIENT_SIGNATURE = "NEW_CLIENT_ATTACHED";
 Q_OBJECT
 public:
     explicit NetworkRequestsHandler(QObject *parent=0);
