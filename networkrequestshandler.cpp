@@ -16,7 +16,9 @@ NetworkRequestsHandler::~NetworkRequestsHandler()
 }
 bool NetworkRequestsHandler::checkConnection(){
     QNetworkRequest request;
-    request.setUrl(QUrl("http://localhost:80"));
+    request.setUrl(QUrl("http://127.0.0.1"));
+    //request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json; charset=UTF-8");
+    request.setRawHeader("Content",NEW_CLIENT_SIGNATURE.toUtf8());
     connect(netManager, &QNetworkAccessManager::finished,
             this, [=](QNetworkReply *reply) {
                 if (reply->error()) {
@@ -29,7 +31,7 @@ bool NetworkRequestsHandler::checkConnection(){
                 qDebug() << answer;
             }
         );
-    netManager->get(request);
+    netManager->post(request,NEW_CLIENT_SIGNATURE.toUtf8());
 //    QSqlDatabase dbObj = QSqlDatabase::addDatabase("QPSQL");
 //    dbObj.setDatabaseName("test_task_db");
 //    dbObj.setUserName("postgres");

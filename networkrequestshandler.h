@@ -14,6 +14,7 @@
 #include <QSql>
 #include <QString>
 #include <QtNetwork/QNetworkReply>
+#include <QHttpPart>
 using namespace std;
 
 
