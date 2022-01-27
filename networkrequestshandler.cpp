@@ -14,7 +14,7 @@ NetworkRequestsHandler::~NetworkRequestsHandler()
     //free(netManager);
     //free(request);
 }
-bool NetworkRequestsHandler::checkConnection(){
+void NetworkRequestsHandler::checkConnection(LoginWindow* window){
     QNetworkRequest request;
     request.setUrl(QUrl("http://127.0.0.1"));
     //request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json; charset=UTF-8");
@@ -23,10 +23,19 @@ bool NetworkRequestsHandler::checkConnection(){
             this, [=](QNetworkReply *reply) {
                 if (reply->error()) {
                     qDebug() << reply->errorString();
+                     window->notifyConnectionDown();
                     return;
                 }
 
                 QString answer = reply->readAll();
+                if(answer == NEW_CLIENT_SIGNATURE_ACCEPTED)
+                {
+                    window->notifyConnectionUp();
+                }
+                else
+                {
+                    window->notifyConnectionDown();
+                }
 
                 qDebug() << answer;
             }
