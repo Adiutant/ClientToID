@@ -22,7 +22,7 @@ public:
 private slots:
     void on_loginButton_clicked();
 
-    void on_pushButton_clicked();
+    void on_registerButton_clicked();
 
 private:
     Ui::LoginWindow *ui;

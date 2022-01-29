@@ -26,7 +26,7 @@ void LoginWindow::on_loginButton_clicked()
 
 }
 
-void LoginWindow::on_pushButton_clicked()
+void LoginWindow::on_registerButton_clicked()
 {
 
 }

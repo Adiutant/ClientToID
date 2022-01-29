@@ -28,6 +28,9 @@ private :
     const QString HEALTHY_CODE = "HEALTHY_ACT";
     const QString NEW_CLIENT_SIGNATURE = "NEW_CLIENT_ATTACHED";
     const QString NEW_CLIENT_SIGNATURE_ACCEPTED = "NEW_CLIENT_ATTACHED_YES";
+    const QString LOGIN_CLIENT_SIGNATURE = "LOGIN_CLIENT";
+    const QString LOGIN_CLIENT_SIGNATURE_SUCCESS = "LOGIN_SUCCESS";
+    QString _accessToken;
 
 Q_OBJECT
 
@@ -35,7 +38,7 @@ public:
     explicit NetworkRequestsHandler(QObject *parent=0);
      ~NetworkRequestsHandler();
     void checkConnection(LoginWindow* window);
-    bool checkAccess(QString username, QString password );
+    bool checkAccess(QString username, QString password , LoginWindow* window );
     bool writeNewUser(QString username, QString password,QString lastname ,
                       QString patronymic, QString name, QString nodegroup, QString roles, QString phonenumber,
                       QString email, QString userdescription, QString passwordexpiration, QString loginattemptsaviable);

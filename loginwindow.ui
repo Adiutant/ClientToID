@@ -59,7 +59,7 @@
      <string>Войти</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="registerButton">
     <property name="geometry">
      <rect>
       <x>190</x>

@@ -15,32 +15,34 @@ NetworkRequestsHandler::~NetworkRequestsHandler()
     //free(request);
 }
 void NetworkRequestsHandler::checkConnection(LoginWindow* window){
-    QNetworkRequest request;
-    request.setUrl(QUrl("http://127.0.0.1"));
-    //request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json; charset=UTF-8");
-    request.setRawHeader("Content",NEW_CLIENT_SIGNATURE.toUtf8());
-    connect(netManager, &QNetworkAccessManager::finished,
-            this, [=](QNetworkReply *reply) {
-                if (reply->error()) {
-                    qDebug() << reply->errorString();
-                     window->notifyConnectionDown();
-                    return;
-                }
+    QTcpSocket jSocket;
+    QJsonObject obj;
+    obj.insert("request",NEW_CLIENT_SIGNATURE);
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+    jSocket.connectToHost("127.0.0.1",80);
+    if (jSocket.waitForConnected(2000))
+    {
+    jSocket.write(data);
+    }
+    if (jSocket.waitForReadyRead(2000))
+    {
+        doc = QJsonDocument::fromJson(jSocket.readAll());
+        obj = doc.object();
+        if (obj["response"] == NEW_CLIENT_SIGNATURE_ACCEPTED)
+        {
+            window->notifyConnectionUp();
+        }
+        else
+        {
+            window->notifyConnectionDown();
+        }
 
-                QString answer = reply->readAll();
-                if(answer == NEW_CLIENT_SIGNATURE_ACCEPTED)
-                {
-                    window->notifyConnectionUp();
-                }
-                else
-                {
-                    window->notifyConnectionDown();
-                }
-
-                qDebug() << answer;
-            }
-        );
-    netManager->post(request,NEW_CLIENT_SIGNATURE.toUtf8());
+    }
+    else
+    {
+        window->notifyConnectionDown();
+    }
 //    QSqlDatabase dbObj = QSqlDatabase::addDatabase("QPSQL");
 //    dbObj.setDatabaseName("test_task_db");
 //    dbObj.setUserName("postgres");
@@ -58,14 +60,49 @@ void NetworkRequestsHandler::checkConnection(LoginWindow* window){
 
 //    return true;
 }
-bool NetworkRequestsHandler::checkAccess(QString username, QString password ){
-    QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE username=? AND password=? AND code=?;");
-    query.addBindValue(username);
-    query.addBindValue(password);
+bool NetworkRequestsHandler::checkAccess(QString username, QString password , LoginWindow* window){
+    QTcpSocket jSocket;
+    QJsonObject obj;
+    obj["request"] = LOGIN_CLIENT_SIGNATURE;
+    obj["username"] = username;
+    obj["password"] = password;
+    QJsonDocument doc(obj);
+    QByteArray data = doc.toJson();
+    jSocket.connectToHost("127.0.0.1",80);
+    if (jSocket.waitForConnected(2000))
+    {
+    jSocket.write(data);
+    }
+    if (jSocket.waitForReadyRead(2000))
+    {
+        doc = QJsonDocument::fromJson(jSocket.readAll());
+        obj = doc.object();
+        if (obj["response"] == LOGIN_CLIENT_SIGNATURE_SUCCESS)
+        {
+            accessToken = obj["access_token"];
+            window->notifyConnectionUp();
+        }
+        else
+        {
+            window->notifyConnectionDown();
+        }
 
-    query.exec();
-    if (query.size()<=0){return false;}
+    }
+    else
+    {
+        window->notifyConnectionDown();
+    }
+
+
+
+
+//    QSqlQuery query;
+//    query.prepare("SELECT * FROM users WHERE username=? AND password=? AND code=?;");
+//    query.addBindValue(username);
+//    query.addBindValue(password);
+
+//    query.exec();
+//    if (query.size()<=0){return false;}
 
 return true;
 }
