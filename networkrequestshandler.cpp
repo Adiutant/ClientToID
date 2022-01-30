@@ -17,7 +17,7 @@ NetworkRequestsHandler::~NetworkRequestsHandler()
 void NetworkRequestsHandler::checkConnection(LoginWindow* window){
     QTcpSocket jSocket;
     QJsonObject obj;
-    obj.insert("request",NEW_CLIENT_SIGNATURE);
+    obj["request"] =NEW_CLIENT_SIGNATURE;
     QJsonDocument doc(obj);
     QByteArray data = doc.toJson();
     jSocket.connectToHost("127.0.0.1",80);
@@ -79,7 +79,7 @@ bool NetworkRequestsHandler::checkAccess(QString username, QString password , Lo
         obj = doc.object();
         if (obj["response"] == LOGIN_CLIENT_SIGNATURE_SUCCESS)
         {
-            accessToken = obj["access_token"];
+            _accessToken = obj["access_token"].toString();
             window->notifyConnectionUp();
         }
         else
