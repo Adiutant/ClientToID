@@ -26,11 +26,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     loginwindow.cpp \
-    networkrequestshandler.cpp
+    networkrequestshandler.cpp \
+    RSA.cpp \
+    bigint/BigInteger.cc \
+    bigint/BigIntegerAlgorithms.cc \
+    bigint/BigIntegerUtils.cc \
+    bigint/BigUnsigned.cc \
+    bigint/BigUnsignedInABase.cc \
+    loginwindow.cpp \
+    main.cpp \
+    networkrequestshandler.cpp \
+    RSA.cpp
 
 HEADERS += \
     loginwindow.h \
-    networkrequestshandler.h
+    networkrequestshandler.h \
+    RSA.h \
+    bigint/BigInteger.hh \
+    bigint/BigIntegerAlgorithms.hh \
+    bigint/BigIntegerLibrary.hh \
+    bigint/BigIntegerUtils.hh \
+    bigint/BigUnsigned.hh \
+    bigint/BigUnsignedInABase.hh \
+    bigint/NumberlikeArray.hh \
+    loginwindow.h \
+    networkrequestshandler.h \
+    RSA.h
 
 FORMS += \
     loginwindow.ui
